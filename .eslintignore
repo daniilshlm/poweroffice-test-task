@@ -1,7 +1,7 @@
 # .eslintignore
 
 # Ignore build folders and dependencies
-dist/
+build/
 node_modules/
 
 # Ignore config files
