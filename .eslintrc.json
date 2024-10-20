@@ -1,3 +1,54 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "root": true,
+  "env": { 
+    "browser": true, 
+    "es2020": true, 
+    "node": true 
+  },
+  "extends": [
+    "next/core-web-vitals", 
+    "next/typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "ignorePatterns": ["dist"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "jsx-a11y"
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error", 
+      { "argsIgnorePattern": "^_" }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/no-empty-interface": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+
+    "react/jsx-no-duplicate-props": "error",
+    "react/no-unused-prop-types": "error",
+    "react/no-find-dom-node": "error",
+    "react/jsx-props-no-spreading": "off",
+
+    "prettier/prettier": [
+      "error", 
+      {}, 
+      {"usePrettierrc": true}
+    ],
+
+    "no-console": "warn",
+    "consistent-return": "error",
+    "no-var": "error",
+    "import/prefer-default-export": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }
