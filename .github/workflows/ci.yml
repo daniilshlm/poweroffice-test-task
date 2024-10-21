@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI with Docker, Jest, and Cypress
 
 on:
   push:
@@ -11,26 +11,27 @@ on:
       - develop
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.17.0'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Build Docker image
+        run: docker build -t poweroffice-test-task -f DockerFile .
 
-      - name: Run linting
-        run: npm run lint
+      - name: Run Next.js app in Docker
+        run: docker run -d -p 3000:3000 poweroffice-test-task
 
-      - name: Run unit tests
+      - name: Wait for Next.js to be ready
+        run: npx wait-on http://localhost:3000
+
+      - name: Run tests
         run: npm run test
 
-      - name: Build the app
-        run: npm run build
+      - name: Stop Next.js Docker container
+        run: docker stop $(docker ps -q --filter ancestor=poweroffice-test-task)
