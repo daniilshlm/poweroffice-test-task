@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME_PRODUCTION }}/web .
+          docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME_PRODUCTION }}/web -f DockerFile .
 
       - name: Push Docker image to Heroku
         run: |
