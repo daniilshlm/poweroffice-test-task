@@ -9,6 +9,7 @@
     "lint": "next lint",
     "format:fix": "prettier --write ./src ./cypress/e2e",
     "test": "jest && npm run cypress:run",
+    "jest": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:update": "jest --updateSnapshot",
