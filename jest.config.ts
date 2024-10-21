@@ -17,6 +17,7 @@ const config: Config = {
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
+  transformIgnorePatterns: ['/node_modules/(?!.*\\.(ts|tsx|js|jsx)$)'],
 };
 
 export default createJestConfig(config);

@@ -35,7 +35,7 @@ jobs:
   
 
       - name: Run Unit tests
-        run: docker run --rm poweroffice-test-task npx jest
+        run: docker run --rm poweroffice-test-task npm run test:jest
 
       - name: Run Next.js app in Docker
         run: docker run -d -p 3000:3000 --name test_container poweroffice-test-task
