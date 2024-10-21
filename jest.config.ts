@@ -7,17 +7,13 @@ const createJestConfig = nextJest({
 
 const config: Config = {
   coverageProvider: 'v8',
-  preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
-  transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
-  },
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
-  transformIgnorePatterns: ['/node_modules/(?!.*\\.(ts|tsx|js|jsx)$)'],
+  transformIgnorePatterns: ['/node_modules/'],
 };
 
 export default createJestConfig(config);
