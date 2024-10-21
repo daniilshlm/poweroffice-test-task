@@ -1,14 +1,20 @@
 import React from 'react';
 import { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { store } from '@/redux/store';
+import { ThemeProvider } from '@/context/ThemeContext';
+import ErrorBoundary from '@/components/ErrorBoundery/ErrorBoundery';
 import '@/styles/globals.scss';
 
 function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <ReduxProvider store={store}>
+      <ThemeProvider>
+        <ErrorBoundary>
+          <Component {...pageProps} />
+        </ErrorBoundary>
+      </ThemeProvider>
+    </ReduxProvider>
   );
 }
 
