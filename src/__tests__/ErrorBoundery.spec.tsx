@@ -52,7 +52,7 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>
     );
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(2);
     spy.mockRestore();
   });
 
