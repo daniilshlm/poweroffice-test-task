@@ -12,6 +12,33 @@ ENV CYPRESS_INSTALL_BINARY=true
 
 RUN npx cypress install
 
+RUN apt-get update && apt-get install -y \
+  xvfb \
+  libgtk2.0-0 \
+  libnotify-dev \
+  libgconf-2-4 \
+  libnss3 \
+  dbus-x11 \
+  libxss1 \
+  libasound2 \
+  libxtst6 \
+  libatk-bridge2.0-0 \
+  libgbm-dev \
+  libatk1.0-0 \
+  libpango1.0-0 \
+  libx11-xcb1 \
+  libxcursor1 \
+  libxi6 \
+  libxtst6 \
+  libxrandr2 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxfixes3 \
+  libcups2 \
+  libxrandr2 \
+  libgbm1 \
+  libpangoft2-1.0-0 \
+  libgtk-3-0
 
 COPY . .
 
