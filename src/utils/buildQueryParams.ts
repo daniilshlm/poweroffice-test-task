@@ -3,7 +3,7 @@ import { FetchCompaniesPayload } from '@/types/company';
 const buildQueryParams = (params: FetchCompaniesPayload): string => {
   const query = new URLSearchParams();
 
-  if (params.navn) {
+  if (params.navn && params.navn.trim() !== '') {
     query.append('navn', params.navn);
   }
 
