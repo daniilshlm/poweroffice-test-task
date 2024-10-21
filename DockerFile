@@ -6,6 +6,8 @@ COPY package.json package-lock.json ./
 
 RUN npm install --include=dev
 
+RUN npx cypress install
+
 COPY . .
 
 RUN npm run build
