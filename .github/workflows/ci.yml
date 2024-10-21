@@ -32,7 +32,6 @@ jobs:
 
       - name: Check for Jest test files
         run: docker run --rm poweroffice-test-task find /app/src -name "*.test.*" -o -name "*.spec.*"
-  
 
       - name: Run Unit tests
         run: docker run --rm poweroffice-test-task npm run test:jest
