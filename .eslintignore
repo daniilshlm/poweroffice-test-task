@@ -1,0 +1,15 @@
+# .eslintignore
+
+# Ignore build folders and dependencies
+build/
+node_modules/
+
+# Ignore config files
+*.setup.ts
+*.setup.js
+*.config.js
+*.config.ts
+*.json
+
+# Other files to ignore
+coverage/

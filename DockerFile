@@ -1,0 +1,67 @@
+FROM node:20.15.0 AS build
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm install --include=dev
+
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+
+ENV CYPRESS_INSTALL_BINARY=true
+
+RUN npx cypress install
+
+RUN apt-get update && apt-get install -y \
+  xvfb \
+  libgtk2.0-0 \
+  libnotify-dev \
+  libgconf-2-4 \
+  libnss3 \
+  dbus-x11 \
+  libxss1 \
+  libasound2 \
+  libxtst6 \
+  libatk-bridge2.0-0 \
+  libgbm-dev \
+  libatk1.0-0 \
+  libpango1.0-0 \
+  libx11-xcb1 \
+  libxcursor1 \
+  libxi6 \
+  libxtst6 \
+  libxrandr2 \
+  libxcomposite1 \
+  libxdamage1 \
+  libxfixes3 \
+  libcups2 \
+  libxrandr2 \
+  libgbm1 \
+  libpangoft2-1.0-0 \
+  libgtk-3-0
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+
+FROM node:20.15.0 AS production
+
+WORKDIR /app
+
+COPY --from=build /app/.next ./.next
+
+COPY --from=build /app/src ./src
+
+COPY --from=build /app/src/public ./public
+
+COPY --from=build /app/node_modules ./node_modules
+
+COPY --from=build /app/package.json ./package.json
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
