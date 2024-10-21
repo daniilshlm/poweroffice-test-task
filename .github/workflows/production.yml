@@ -1,37 +1,29 @@
-name: Deploy to Production
+name: Deploy to heroku.
 
 on:
   push:
-    branches:
-      - main
+    branches: main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Heroku Container Registry
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY_PRODUCTION }}
-        run: |
-          echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
+      - name: Build, Push and Release a Docker container to Heroku.
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY_PRODUCTION }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_PRODUCTION }}
 
-      - name: Build Docker image
-        run: |
-          docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME_PRODUCTION }}/web -f DockerFile .
 
-      - name: Push Docker image to Heroku
-        run: |
-          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME_PRODUCTION }}/web
+          dockerfile_directory: ./
+          dockerfile_name: DockerFile
 
-      - name: Release the app on Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY_PRODUCTION }}
-        run: |
-          heroku container:release web --app ${{ secrets.HEROKU_APP_NAME_PRODUCTION }}
+          docker_options: "--no-cache"
+
+          process_type: web
