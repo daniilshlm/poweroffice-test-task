@@ -1,12 +1,9 @@
 name: Deploy to Heroku
 
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Deployment environment'
-        required: true
-        default: 'staging'
+  push:
+    branches:
+      - develop
 
 jobs:
   deploy:
