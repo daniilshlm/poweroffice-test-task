@@ -56,6 +56,4 @@ export interface CompanyState {
 
 export interface FetchCompaniesPayload {
   search: string;
-  page: number;
-  itemsPerPage: number;
 }
