@@ -39,7 +39,7 @@ jobs:
         run: docker run --rm poweroffice-test-task npm run test:jest --verbose --debug --no-cache
 
       - name: Run Next.js app in Docker
-        run: docker run -d -p 3000:3000 --name test_container poweroffice-test-task
+        run: docker run -d -p 3000:3000 --name test_container -e PORT=3000 poweroffice-test-task
 
       - name: Wait for Next.js to be ready
         run: |
