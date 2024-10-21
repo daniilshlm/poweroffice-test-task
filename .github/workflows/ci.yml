@@ -24,14 +24,18 @@ jobs:
       - name: Build Docker image
         run: docker build -t poweroffice-test-task -f DockerFile .
 
+      - name: Run tests inside Docker
+        run: |
+          docker run --rm poweroffice-test-task npm run test
+
       - name: Run Next.js app in Docker
         run: docker run -d -p 3000:3000 poweroffice-test-task
 
       - name: Wait for Next.js to be ready
         run: npx wait-on http://localhost:3000
 
-      - name: Run tests
-        run: npm run test
-
+      - name: Run Cypress tests
+        run: docker exec $(docker ps -q --filter ancestor=poweroffice-test-task) npm run cypress:run
+      
       - name: Stop Next.js Docker container
         run: docker stop $(docker ps -q --filter ancestor=poweroffice-test-task)
