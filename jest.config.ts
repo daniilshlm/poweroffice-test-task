@@ -1,4 +1,12 @@
-module.exports = {
+import type { Config } from 'jest';
+import nextJest from 'next/jest.js';
+
+const createJestConfig = nextJest({
+  dir: './src',
+});
+
+const config: Config = {
+  coverageProvider: 'v8',
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
@@ -10,3 +18,5 @@ module.exports = {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
 };
+
+export default createJestConfig(config);

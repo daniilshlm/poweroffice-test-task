@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format:fix": "prettier --write ./src",
+    "format:fix": "prettier --write ./src ./cypress/e2e",
     "test": "jest && npm run cypress:run",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -48,7 +48,7 @@
     "prettier": "^3.3.3",
     "sass": "^1.80.3",
     "ts-jest": "^29.2.5",
-    "typescript": "^5"
+    "typescript": "^5.6.3"
   },
   "lint-staged": {
     "*.{js,ts,tsx,json,css,scss}": [
