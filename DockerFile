@@ -12,6 +12,8 @@ ENV CYPRESS_INSTALL_BINARY=true
 
 RUN npx cypress install
 
+COPY .babelrc .babelrc
+
 COPY . .
 
 RUN npm run build
