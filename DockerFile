@@ -1,4 +1,4 @@
-FROM node:18.17.0 AS build
+FROM node:20.15.0 AS build
 
 WORKDIR /app
 
@@ -6,13 +6,17 @@ COPY package.json package-lock.json ./
 
 RUN npm install --include=dev
 
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+
+ENV CYPRESS_INSTALL_BINARY=true
+
 RUN npx cypress install
 
 COPY . .
 
 RUN npm run build
 
-FROM node:18.17.0 AS production
+FROM node:20.15.0 AS production
 
 WORKDIR /app
 
