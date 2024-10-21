@@ -18,7 +18,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        run: docker build --target build -t poweroffice-test-task -f DockerFile .
+        run: docker build --target deps -t poweroffice-test-task -f DockerFile .
 
       - name: Verify .babelrc in Docker
         run: docker run --rm poweroffice-test-task ls -la /app/.babelrc  
