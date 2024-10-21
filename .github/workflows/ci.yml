@@ -51,7 +51,7 @@ jobs:
 
       - name: Run Cypress tests
         run: |
-          docker exec test_container npx cypress run --headless --verbose || echo "Cypress tests failed"
+          docker exec test_container npm run cypress:run || echo "Cypress tests failed"
 
       - name: Stop Next.js Docker container
         run: docker stop test_container
