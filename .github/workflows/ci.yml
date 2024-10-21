@@ -24,6 +24,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t poweroffice-test-task -f DockerFile .
 
+      - name: Verify Jest and Cypress installations
+        run: |
+          docker run --rm poweroffice-test-task npm ls jest
+          docker run --rm poweroffice-test-task npm ls cypress
+          docker run --rm poweroffice-test-task npx cypress --version
+
       - name: Run Unit tests
         run: docker run --rm poweroffice-test-task npm run test:jest
 
