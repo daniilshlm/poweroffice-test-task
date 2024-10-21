@@ -1,9 +1,12 @@
-name: Deploy to Staging
+name: Deploy to Heroku
 
 on:
-  push:
-    branches:
-      - develop
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
 
 jobs:
   deploy:
@@ -13,9 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v1
-
       - name: Log in to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY_STAGING }}
@@ -23,15 +23,10 @@ jobs:
           echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
 
       - name: Build Docker image
-        run: |
-          docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME_STAGING }}/web .
+        run: docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME_STAGING }}/web -f deploy/Dockerfile .
 
       - name: Push Docker image to Heroku
-        run: |
-          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME_STAGING }}/web
+        run: docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME_STAGING }}/web
 
       - name: Release the app on Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY_STAGING }}
-        run: |
-          heroku container:release web --app ${{ secrets.HEROKU_APP_NAME_STAGING }}
+        run: heroku container:release web --app ${{ secrets.HEROKU_APP_NAME_STAGING }}
