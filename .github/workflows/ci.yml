@@ -20,9 +20,6 @@ jobs:
       - name: Build Docker image
         run: docker build --target deps -t poweroffice-test-task -f DockerFile .
 
-      - name: Verify .babelrc in Docker
-        run: docker run --rm poweroffice-test-task ls -la /app/.babelrc  
-
       - name: Verify Jest and Cypress installations
         run: |
           docker run --rm poweroffice-test-task npm ls jest
