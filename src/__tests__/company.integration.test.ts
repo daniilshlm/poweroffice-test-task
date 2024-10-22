@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import companyReducer, { fetchCompanies } from '@/redux/slices/companySlice';
 import { CompanyState } from '@/types/company';
 import axios from 'axios';
-import * as api from '@/utils/api';
 import { AppDispatch, RootState } from '@/redux/store';
 import log from 'loglevel';
 
