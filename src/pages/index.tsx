@@ -8,6 +8,7 @@ import { preloadCompanies } from '@/redux/slices/companySlice';
 import { fetchCompaniesFromAPI } from '@/utils/api';
 import { GetServerSideProps } from 'next';
 import { Company, FetchCompaniesPayload } from '@/types/company';
+import ThemeToggleButton from '@/components/ToggleTheme/ToggleTheme';
 
 interface HomePageProps {
   initialCompanies: Company[];
@@ -44,6 +45,7 @@ const HomePage = ({
   return (
     <div>
       <h1>Company Search</h1>
+      <ThemeToggleButton />
       <SearchBar initialSearchTerm={searchTerm as string} initialSize={size as string} />
       <CompanyList companies={companies} />
       <Pagination initialPage={parseInt(page || '1', 10)} />
