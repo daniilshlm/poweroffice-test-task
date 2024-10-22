@@ -52,7 +52,7 @@ WORKDIR /app
 
 COPY --from=deps /app/package.json ./package.json
 
-RUN npm install --production
+RUN npm install --omit=dev
 
 COPY --from=deps /app/.next ./.next
 
