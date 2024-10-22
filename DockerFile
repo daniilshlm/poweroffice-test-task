@@ -10,8 +10,6 @@ ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 
 ENV CYPRESS_INSTALL_BINARY=true
 
-RUN npx cypress install
-
 RUN apt-get update && apt-get install -y \
   xvfb \
   libgtk2.0-0 \
@@ -52,15 +50,15 @@ FROM node:20.15.0 AS runner
 
 WORKDIR /app
 
+COPY --from=deps /app/package.json ./package.json
+
+RUN npm install --omit=dev
+
 COPY --from=deps /app/.next ./.next
 
 COPY --from=deps /app/src ./src
 
 COPY --from=deps /app/src/public ./public
-
-COPY --from=deps /app/node_modules ./node_modules
-
-COPY --from=deps /app/package.json ./package.json
 
 ENV PORT=3000
 
