@@ -42,7 +42,7 @@ const Pagination = ({ initialPage }: PaginationProps): JSX.Element => {
   }, [router.query, dispatch]);
 
   return (
-    <div>
+    <div className="pagination">
       <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1}>
         Previous
       </button>
