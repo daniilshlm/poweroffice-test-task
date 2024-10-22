@@ -53,7 +53,7 @@ const SearchBar = ({ initialSearchTerm, initialSize }: SearchBarProps): JSX.Elem
   }, [router.query]);
 
   return (
-    <div>
+    <div className="search-bar">
       <input
         type="text"
         value={searchTerm}
