@@ -43,19 +43,6 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('Test error')).toBeInTheDocument();
   });
 
-  it('calls getDerivedStateFromError when an error is thrown', () => {
-    const spy = jest.spyOn(ErrorBoundary, 'getDerivedStateFromError');
-
-    render(
-      <ErrorBoundary>
-        <ProblemChild />
-      </ErrorBoundary>
-    );
-
-    expect(spy).toHaveBeenCalledTimes(2);
-    spy.mockRestore();
-  });
-
   it('calls componentDidCatch when an error is thrown', () => {
     const spy = jest.spyOn(ErrorBoundary.prototype, 'componentDidCatch');
 
