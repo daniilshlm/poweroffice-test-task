@@ -52,7 +52,7 @@ WORKDIR /app
 
 COPY --from=deps /app/package.json ./package.json
 
-RUN npm install --only=production
+RUN npm install --production
 
 COPY --from=deps /app/.next ./.next
 

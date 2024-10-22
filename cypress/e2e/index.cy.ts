@@ -26,4 +26,3 @@ describe('Home Page', () => {
     cy.get('.pagination').should('exist');
   });
 });
-
