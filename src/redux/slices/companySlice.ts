@@ -1,32 +1,36 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { Company, FetchCompaniesPayload, CompanyState } from '@/types/company';
+import { fetchCompaniesFromAPI } from '@/utils/api';
 
 const initialState: CompanyState = {
   companies: [],
   loading: false,
   error: null,
   totalItems: 0,
+  totalPages: 1,
 };
 
 export const fetchCompanies = createAsyncThunk(
   'company/fetchCompanies',
-  async ({ search }: FetchCompaniesPayload) => {
-    const url = `https://data.brreg.no/enhetsregisteret/api/enheter/?${
-      search ? `navn=${encodeURIComponent(search)}&` : ''
-    }per_page=10`;
-    const response = await axios.get(url);
-    return {
-      companies: response.data._embedded.enheter,
-      totalItems: response.data.page.totalElements,
-    };
+  async (params: FetchCompaniesPayload) => {
+    return fetchCompaniesFromAPI(params);
   }
 );
 
 const companySlice = createSlice({
   name: 'company',
   initialState,
-  reducers: {},
+  reducers: {
+    preloadCompanies: (
+      state,
+      action: PayloadAction<{ companies: Company[]; totalItems: number; totalPages: number }>
+    ) => {
+      state.companies = action.payload.companies;
+      state.totalItems = action.payload.totalItems;
+      state.totalPages = action.payload.totalPages;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCompanies.pending, (state) => {
@@ -35,10 +39,14 @@ const companySlice = createSlice({
       })
       .addCase(
         fetchCompanies.fulfilled,
-        (state, action: PayloadAction<{ companies: Company[]; totalItems: number }>) => {
+        (
+          state,
+          action: PayloadAction<{ companies: Company[]; totalItems: number; totalPages: number }>
+        ) => {
           state.loading = false;
           state.companies = action.payload.companies;
           state.totalItems = action.payload.totalItems;
+          state.totalPages = action.payload.totalPages;
         }
       )
       .addCase(fetchCompanies.rejected, (state, action) => {
@@ -48,4 +56,5 @@ const companySlice = createSlice({
   },
 });
 
+export const { preloadCompanies } = companySlice.actions;
 export default companySlice.reducer;
