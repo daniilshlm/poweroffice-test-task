@@ -58,7 +58,6 @@ export interface CompanyState {
 export interface FetchCompaniesPayload {
   navn: string;
   organisasjonsnummer?: string;
-  sort?: string;
   size: string;
   page: string;
 }
