@@ -52,12 +52,13 @@ export interface CompanyState {
   loading: boolean;
   error: string | null;
   totalItems: number;
+  totalPages: number;
 }
 
 export interface FetchCompaniesPayload {
   navn: string;
   organisasjonsnummer?: string;
   sort?: string;
-  size?: string;
-  page?: string;
+  size: string;
+  page: string;
 }
